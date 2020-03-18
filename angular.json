@@ -2,5 +2,175 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "stratnav": {
+      "root": "projects/stratnav",
+      "sourceRoot": "projects/stratnav/src",
+      "projectType": "library",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/stratnav/tsconfig.lib.json",
+            "project": "projects/stratnav/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/se-core/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stratnav/src/test.ts",
+            "tsConfig": "projects/stratnav/tsconfig.spec.json",
+            "karmaConfig": "projects/stratnav/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stratnav/tsconfig.lib.json",
+              "projects/stratnav/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stratnav-docs": {
+      "root": "projects/stratnav-docs/",
+      "sourceRoot": "projects/stratnav-docs/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/stratnav-docs",
+            "index": "projects/stratnav-docs/src/index.html",
+            "main": "projects/stratnav-docs/src/main.ts",
+            "polyfills": "projects/stratnav-docs/src/polyfills.ts",
+            "tsConfig": "projects/stratnav-docs/tsconfig.app.json",
+            "assets": [
+              "projects/stratnav-docs/src/favicon.ico",
+              "projects/stratnav-docs/src/assets"
+            ],
+            "styles": [
+              "projects/stratnav-docs/src/styles.css"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/stratnav-docs/src/environments/environment.ts",
+                  "with": "projects/stratnav-docs/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "stratnav-docs:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "stratnav-docs:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "stratnav-docs:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/stratnav-docs/src/test.ts",
+            "polyfills": "projects/stratnav-docs/src/polyfills.ts",
+            "tsConfig": "projects/stratnav-docs/tsconfig.spec.json",
+            "karmaConfig": "projects/stratnav-docs/karma.conf.js",
+            "styles": [
+              "projects/stratnav-docs/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/stratnav-docs/src/favicon.ico",
+              "projects/stratnav-docs/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/stratnav-docs/tsconfig.app.json",
+              "projects/stratnav-docs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "stratnav-docs-e2e": {
+      "root": "projects/stratnav-docs-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/stratnav-docs-e2e/protractor.conf.js",
+            "devServerTarget": "stratnav-docs:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "stratnav-docs:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/stratnav-docs-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "stratnav"
 }

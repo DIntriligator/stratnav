@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "stratnav": [
+        "dist/stratnav"
+      ],
+      "stratnav/*": [
+        "dist/stratnav/*"
+      ]
+    }
   }
 }
